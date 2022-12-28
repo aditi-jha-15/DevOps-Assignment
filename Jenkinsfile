@@ -64,7 +64,7 @@ pipeline {
 
                 script {
 
-                    bat "docker build -t aditijha15/employee-management ."                    
+                    bat "docker build -t aditijha15/devops-assignment ."                    
 
                 }
 
@@ -72,25 +72,25 @@ pipeline {
 
         }
 
-        // stage('Push Image to DockerHub') {
+        stage('Push Image to DockerHub') {
 
-        //     steps {
+            steps {
 
-        //         script {
+                script {
 
-        //             withCredentials([string(credentialsId: 'DockerHubPwd', variable: 'dockerhubpwd')]) {
+                   withCredentials([string(credentialsId: 'dockerhubpwd', variable: 'dockerHubPwd')]) {
 
-        //                 bat "docker login -u naimarashid -p ${dockerhubpwd}"
+                        bat "docker login -u aditijha15 -p ${dockerHubPwd}"
 
-        //             }
+                    }
 
-        //             bat "docker push naimarashid/employee-management"                  
+                    bat "docker push aditijha15/devops-assignment"                  
 
-        //         }
+                }
 
-        //     }
+            }
 
-        // }
+        }
 
     }
 
