@@ -7,7 +7,7 @@ pipeline {
     tools{
 
         maven 'MAVEN'
-        docker 'DOCKER'
+//         docker 'DOCKER'
 
     }
 
