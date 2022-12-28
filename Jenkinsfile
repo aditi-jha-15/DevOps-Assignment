@@ -1,31 +1,65 @@
 pipeline {
+
     agent any
+
     tools{
+
         maven 'MAVEN'
+
     }
 
+
+
     stages {
-        stage('git') {
+
+        stage('Git Checkout') {
+
             steps {
+
                 git branch: 'main', url: 'https://github.com/aditi-jha-15/DevOps-Assignment.git'
+
             }
+
         }
-        stage('build') {
+
+        stage('Build') {
+
             steps {
+
                 sh "mvn clean install"
+
             }
+
         }
-          stage('test') {
+
+          stage('Test') {
+
             steps {
+
                 sh "mvn test"
+
             }
+
         }
-        stage('sonarqube analysis'){
+
+        stage('SonarQube Analysis') {
+
             steps {
-                withSonarQubeEnv(credentialsId: 'sonarAPIkey') {
-                   sh "mvn clean package sonar:sonar"
-}
- }
+
+                script {
+
+                    withSonarQubeEnv(credentialsId: 'sonarAPIkey') {
+
+                        sh "mvn clean package sonar:sonar"
+
+                    }
+
+                }
+
+            }
+
         }
+
     }
+
 }
