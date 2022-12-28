@@ -1,5 +1,3 @@
-
-
 pipeline {
 
     agent any
@@ -7,7 +5,6 @@ pipeline {
     tools{
 
         maven 'MAVEN'
-//         docker 'DOCKER'
 
     }
 
@@ -29,7 +26,7 @@ pipeline {
 
             steps {
 
-                sh "mvn clean install"
+                bat "mvn clean install"
 
             }
 
@@ -39,7 +36,7 @@ pipeline {
 
             steps {
 
-                sh "mvn test"
+                bat "mvn test"
 
             }
 
@@ -51,9 +48,9 @@ pipeline {
 
                 script {
 
-                    withSonarQubeEnv(credentialsId: 'sonarAPIkey') {
+                    withSonarQubeEnv(credentialsId: 'SonarAPI') {
 
-                        sh "mvn clean package sonar:sonar"
+                        bat "mvn clean package sonar:sonar"
 
                     }
 
@@ -62,12 +59,35 @@ pipeline {
             }
 
         }
-           stage('Build Docker Image') {
+
+        stage('Build Docker Image') {
 
             steps {
 
-                script{
-                     sh "docker build -t devOps/employee-management ."
+                script {
+
+                    bat "docker build -t naimarashid/employee-management ."                    
+
+                }
+
+            }
+
+        }
+
+        stage('Push Image to DockerHub') {
+
+            steps {
+
+                script {
+
+                    withCredentials([string(credentialsId: 'DockerHubPwd', variable: 'dockerhubpwd')]) {
+
+                        bat "docker login -u naimarashid -p ${dockerhubpwd}"
+
+                    }
+
+                    bat "docker push naimarashid/employee-management"                  
+
                 }
 
             }
