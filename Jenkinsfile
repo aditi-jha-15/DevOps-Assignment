@@ -1,10 +1,12 @@
+s (32 sloc)  774 Bytes
+
 pipeline {
 
     agent any
 
     tools{
 
-        maven 'MAVEN'
+        maven 'MAVEN',
         docker 'DOCKER'
 
     }
