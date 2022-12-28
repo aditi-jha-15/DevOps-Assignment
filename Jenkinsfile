@@ -20,5 +20,10 @@ pipeline {
                 sh "mvn test"
             }
         }
-    }
+        stage('sonarqube analysis'){
+            steps {
+                withSonarQubeEnv(credentialsId: 'sonarAPIkey') {
+                   sh "mvn clean package sonar:sonar"
+}
+ }
 }
