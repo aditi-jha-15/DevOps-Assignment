@@ -32,7 +32,13 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
+<<<<<<< HEAD
                     bat "docker build -t naimarashid/employee-management ."                    
+=======
+
+                    bat "docker build -t aditijha15/employee-management ."                    
+
+>>>>>>> 82d819a2e9402c1b77add85627bf13af79c8b9b5
                 }
             }
         }
@@ -40,9 +46,19 @@ pipeline {
             steps {
                 script {
                     withCredentials([string(credentialsId: 'DockerHubPwd', variable: 'dockerhubpwd')]) {
+<<<<<<< HEAD
                         bat "docker login -u naimarashid -p ${dockerhubpwd}"
                     } 
                     bat "docker push naimarashid/employee-management"                  
+=======
+
+                        bat "docker login -u aditijha15 -p ${dockerhubpwd}"
+
+                    }
+
+                    bat "docker aditijha15/employee-management"                  
+
+>>>>>>> 82d819a2e9402c1b77add85627bf13af79c8b9b5
                 }
             }
         }
