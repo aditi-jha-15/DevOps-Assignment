@@ -66,7 +66,7 @@ pipeline {
 
                 script {
 
-                    bat "docker build -t naimarashid/employee-management ."                    
+                    bat "docker build -t aditijha15/employee-management ."                    
 
                 }
 
@@ -82,11 +82,11 @@ pipeline {
 
                     withCredentials([string(credentialsId: 'DockerHubPwd', variable: 'dockerhubpwd')]) {
 
-                        bat "docker login -u naimarashid -p ${dockerhubpwd}"
+                        bat "docker login -u aditijha15 -p ${dockerhubpwd}"
 
                     }
 
-                    bat "docker push naimarashid/employee-management"                  
+                    bat "docker aditijha15/employee-management"                  
 
                 }
 
