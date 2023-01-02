@@ -63,6 +63,13 @@ pipeline {
             steps {
 
                 script {
+                    script {
+
+                        withCredentials([string(credentialsId: 'dockerhubpwd', variable: 'dockerHubPwd')]) {
+
+                        bat "docker login -u aditijha15 -p ${dockerHubPwd}"
+
+                    }
 
                     bat "docker build -t aditijha15/devops-assignment ."                    
 
