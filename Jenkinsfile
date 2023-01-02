@@ -78,6 +78,7 @@ pipeline {
             }
 
         }
+        }    
 
         stage('Push Image to DockerHub') {
 
@@ -101,5 +102,4 @@ pipeline {
 
     }
 
-}
 }
