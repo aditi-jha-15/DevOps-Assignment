@@ -79,26 +79,27 @@ pipeline {
 
         }
 
-        stage('Push Image to DockerHub') {
+        // stage('Push Image to DockerHub') {
 
-            steps {
+        //     steps {
 
-                script {
+        //         script {
 
-                   withCredentials([string(credentialsId: 'dockerhubpwd', variable: 'dockerHubPwd')]) {
+        //            withCredentials([string(credentialsId: 'dockerhubpwd', variable: 'dockerHubPwd')]) {
 
-                        bat "docker login -u aditijha15 -p ${dockerHubPwd}"
+        //                 bat "docker login -u aditijha15 -p ${dockerHubPwd}"
 
-                    }
+        //             }
 
-                    bat "docker push aditijha15/devops-assignment"                  
+        //             bat "docker push aditijha15/devops-assignment"                  
 
-                }
+        //         }
 
-            }
+        //     }
 
-        }
+        // }
 
     }
 
+}
 }
