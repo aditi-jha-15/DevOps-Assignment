@@ -1,105 +1,60 @@
 pipeline {
- agent any
+    agent any
     tools{
-
         maven 'MAVEN'
-
     }
-
-
 
     stages {
-
         stage('Git Checkout') {
-
             steps {
-
-                git branch: 'main', url: 'https://github.com/aditi-jha-15/DevOps-Assignment.git'
-
+                  git branch: 'main', url: 'https://github.com/aditi-jha-15/DevOps-Assignment.git'
             }
-
         }
-
         stage('Build') {
-
             steps {
-
-                bat "mvn clean install"
-
+                sh "mvn clean install"
             }
-
         }
-
           stage('Test') {
-
             steps {
-
-                bat "mvn test"
-
+                sh "mvn test"
             }
-
         }
-     stage('SonarQube Analysis') {
-
-            steps {
-
-                script {
-
-                    withSonarQubeEnv(credentialsId: 'sonarAPIkey') {
-
-                        sh "mvn clean package sonar:sonar"
-
-                    }
-
-                }
-
-            }
-
-        }
-
-      
         stage('Build Docker Image') {
-
             steps {
-
                 script {
-                    script {
-
-                        withCredentials([string(credentialsId: 'dockerhubpwd', variable: 'dockerHubPwd')]) {
-
-                        bat "docker login -u aditijha15 -p ${dockerHubPwd}"
-
-                    }
-
-                    bat "docker build -t aditijha15/devops-assignment ."                    
-
+                    withCredentials([string(credentialsId: 'DockerHubPwd', variable: 'dockerhub')]) {
+                        sh "docker login -u aditijha15 -p ${dockerhub}"
+                    } 
+                    sh "docker build -t aditijha15/employee-management ."                    
                 }
-
             }
-
         }
-        }    
-
         stage('Push Image to DockerHub') {
-
             steps {
-
                 script {
-
-                   withCredentials([string(credentialsId: 'dockerhubpwd', variable: 'dockerHubPwd')]) {
-
-                        bat "docker login -u aditijha15 -p ${dockerHubPwd}"
-
-                    }
-
-                    bat "docker push aditijha15/devops-assignment"                  
-
+                    withCredentials([string(credentialsId: 'DockerHubPwd', variable: 'dockerhub')]) {
+                        sh "docker login -u aditijha15 -p ${dockerhub}"
+                    } 
+                    sh "docker push aditijha15/employee-management"                  
                 }
-
             }
-
         }
-
+        stage('Docker Deployment') {
+            steps {
+                script {
+                    sh "docker run -p 7777:7777 aditijha15/employee-management"
+                }            
+            }
+        }
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                    withSonarQubeEnv(credentialsId: 'SonarAPI') {
+                        sh "mvn clean package sonar:sonar"
+                    }
+                }
+            }
+        }        
     }
-
 }
