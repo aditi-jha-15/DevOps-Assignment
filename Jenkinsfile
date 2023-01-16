@@ -40,7 +40,7 @@ pipeline {
 
         }
 
-        s
+      
         stage('Build Docker Image') {
 
             steps {
