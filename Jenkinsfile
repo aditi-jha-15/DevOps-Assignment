@@ -40,24 +40,7 @@ pipeline {
 
         }
 
-        stage('SonarQube Analysis') {
-
-            steps {
-
-                script {
-
-                    withSonarQubeEnv(credentialsId: 'Sonar-API') {
-
-                        bat "mvn clean package sonar:sonar"
-
-                    }
-
-                }
-
-            }
-
-        }
-
+        s
         stage('Build Docker Image') {
 
             steps {
