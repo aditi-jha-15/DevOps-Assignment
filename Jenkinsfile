@@ -43,7 +43,7 @@ pipeline {
         stage('Docker Deployment') {
             steps {
                 script {
-                    sh "docker run -p 7777:7777 aditijha15/employee-management"
+                    sh "mvn clean install"
                 }            
             }
         }
