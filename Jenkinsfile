@@ -43,14 +43,14 @@ pipeline {
         stage('Docker Deployment') {
             steps {
                 script {
-                    sh "mvn clean install"
+                    sh "docker run -p 7777:7777 aditijha15/employee-management"
                 }            
             }
         }
         stage('SonarQube Analysis') {
             steps {
                 script {
-                    withSonarQubeEnv(credentialsId: 'Sonar-API') {
+                   withSonarQubeEnv(credentialsId: 'Sonar-API') {
                         sh "mvn clean package sonar:sonar"
                     }
                 }
