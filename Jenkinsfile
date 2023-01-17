@@ -26,7 +26,7 @@ pipeline {
                     withCredentials([string(credentialsId: 'dockerhubPwd', variable: 'dockerhub')]) {
                         sh "docker login -u aditijha15 -p ${dockerhub}"
                     } 
-                    sh "docker build -t aditijha15/devops-assignment ."                    
+                    sh "docker build -t aditijha15/employee-management ."                    
                 }
             }
         }
@@ -36,25 +36,25 @@ pipeline {
                    withCredentials([string(credentialsId: 'dockerhubPwd', variable: 'dockerhub')]) {
                         sh "docker login -u aditijha15 -p ${dockerhub}"
                     } 
-                    sh "docker push aditijha15/devops-assignment"                  
+                    sh "docker push aditijha15/employee-management"                  
                 }
             }
         }
-        // stage('Docker Deployment') {
-        //     steps {
-        //         script {
-        //             sh "docker run -p 7777:7777 aditijha15/employee-management"
-        //         }            
-        //     }
-        // }
-        // stage('SonarQube Analysis') {
-        //     steps {
-        //         script {
-        //             withSonarQubeEnv(credentialsId: 'SonarAPI') {
-        //                 sh "mvn clean package sonar:sonar"
-        //             }
-        //         }
-        //     }
-        // }        
+        stage('Docker Deployment') {
+            steps {
+                script {
+                    sh "docker run -p 7777:7777 aditijha15/employee-management"
+                }            
+            }
+        }
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                    withSonarQubeEnv(credentialsId: 'sonarAPIkey') {
+                        sh "mvn clean package sonar:sonar"
+                    }
+                }
+            }
+        }        
     }
 }
